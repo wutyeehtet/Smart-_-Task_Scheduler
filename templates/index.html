@@ -10,12 +10,19 @@
 <body class="bg-light">
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">🤖 AI-Based Smart Task Scheduler</h2>
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+        <h2>🤖 AI-Based Smart Task Scheduler</h2>
+        <div>
+            <span class="fw-bold me-3">Welcome, {{ username }}!</span>
+            <a href="/logout" class="btn btn-danger btn-sm shadow-sm">Logout</a>
+        </div>
+    </div>
 
     <div class="card bg-primary text-white mb-4 shadow-sm">
         <div class="card-header d-flex justify-content-between align-items-center">
             <span>💡 AI Daily Recommendation</span>
-            <button id="generateAiBtn" class="btn btn-warning btn-sm fw-bold">✨ Generate AI Recommendation</button>
+            <button id="generateAiBtn" class="btn btn-warning btn-sm fw-bold shadow-sm">✨ Generate AI Recommendation</button>
         </div>
         <div class="card-body">
             <h5 class="card-title" id="ai-focus-task">Click the "Generate" button to get AI suggestions...</h5>
@@ -25,7 +32,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="card mb-4">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-success text-white">Add New Task</div>
                 <div class="card-body">
                     <form id="taskForm">
@@ -45,12 +52,12 @@
                             <label class="form-label">Category</label>
                             <input type="text" class="form-control" id="category" placeholder="e.g. Study, Project">
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Add Task</button>
+                        <button type="submit" class="btn btn-success w-100 fw-bold shadow-sm">Add Task</button>
                     </form>
                 </div>
             </div>
 
-            <div class="card mb-4">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-info text-white">Task Priority Analytics</div>
                 <div class="card-body">
                     <canvas id="priorityChart"></canvas>
@@ -59,7 +66,7 @@
         </div>
 
         <div class="col-md-8">
-            <div class="card">
+            <div class="card shadow-sm">
                 <div class="card-header bg-dark text-white">Your Tasks (Pending)</div>
                 <div class="card-body">
                     <table class="table table-striped align-middle">
@@ -69,7 +76,8 @@
                                 <th>Deadline</th>
                                 <th>AI Priority</th>
                                 <th>Category</th>
-                                <th>Actions</th> </tr>
+                                <th>Actions</th> 
+                            </tr>
                         </thead>
                         <tbody id="taskList">
                             </tbody>
@@ -83,13 +91,16 @@
 <script>
     let myChart = null;
 
- 
+    // AI Recommendation Button Logic
     document.getElementById('generateAiBtn').addEventListener('click', async function() {
         const btn = this;
         btn.innerText = "Generating..."; 
         btn.disabled = true;
 
         const res = await fetch('/recommendation');
+        
+        if (res.status === 401) { window.location.href = '/login'; return; } // Session ကုန်သွားရင် Login ပြန်ဝင်ခိုင်းမယ်
+
         const data = await res.json();
         
         if(data.message) {
@@ -104,7 +115,7 @@
         btn.disabled = false;
     });
 
-  
+    // Chart Rendering Logic
     function renderChart(tasks) {
         let high = 0, medium = 0, low = 0;
         tasks.forEach(task => {
@@ -127,8 +138,15 @@
         });
     }
 
+    // Load Tasks Logic
     async function loadTasks() {
         const res = await fetch('/tasks');
+        
+        if (res.status === 401) { 
+            window.location.href = '/login'; 
+            return; 
+        }
+
         const data = await res.json();
         
         const tbody = document.getElementById('taskList');
@@ -152,23 +170,25 @@
         renderChart(data.tasks);
     }
 
+    // Mark as Done Logic
     async function markTaskDone(taskId) {
-        await fetch(`/tasks/${taskId}/done`, { method: 'PUT' });
+        const res = await fetch(`/tasks/${taskId}/done`, { method: 'PUT' });
+        if (res.status === 401) { window.location.href = '/login'; return; }
         loadTasks(); 
     }
 
-   
+    // Delete Task Logic
     async function deleteTask(taskId) {
         if(confirm("Are you sure you want to delete this task?")) {
-            await fetch(`/tasks/${taskId}`, { method: 'DELETE' });
+            const res = await fetch(`/tasks/${taskId}`, { method: 'DELETE' });
+            if (res.status === 401) { window.location.href = '/login'; return; }
             loadTasks(); 
         }
     }
 
-
+    // Add Task Form Submit Logic
     document.getElementById('taskForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        
         
         const btn = this.querySelector('button[type="submit"]');
         btn.innerText = "Adding Task...";
@@ -181,11 +201,13 @@
             category: document.getElementById('category').value
         };
 
-        await fetch('/tasks', {
+        const res = await fetch('/tasks', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newTask)
         });
+
+        if (res.status === 401) { window.location.href = '/login'; return; }
 
         document.getElementById('taskForm').reset(); 
         loadTasks(); 
@@ -194,6 +216,7 @@
         btn.disabled = false;
     });
 
+    // Run on Load
     window.onload = () => {
         loadTasks();
     };
