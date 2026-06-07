@@ -9,6 +9,8 @@
 **AI-Based Smart Task Scheduler** is an intelligent web application designed to help users effectively manage their time and tasks. Instead of just maintaining a traditional to-do list, this application integrates with **Google Gemini AI** to automatically evaluate the urgency of each task and assign a dynamic priority score (1-10). It also provides daily AI-driven recommendations and productivity tips to keep users focused.
 
 This project was built with a focus on clean architecture, secure user authentication, and seamless AI integration.
+## System Diagram
+<img width="1280" height="853" alt="Image" src="https://github.com/user-attachments/assets/a1094790-f1fd-477b-88b4-d9f5c8eaa1eb" /> 
 
 ## ✨ Key Features
 - **Secure Authentication:** User registration and login system with password hashing (Werkzeug).
@@ -50,9 +52,6 @@ python app.py
 The application will automatically generate the database.db file with the required tables.
 Open your browser and navigate to: http://127.0.0.1:5000.
 
-<img width="903" height="762" alt="Image" src="https://github.com/user-attachments/assets/f03dbf83-aeb5-4911-89c4-97fbf4a1802b" />
-
-
 💡 How It Works (AI Logic)
 1. Task Submission: When a user adds a task, the details (title, deadline, duration) are sent to the backend.
 
@@ -60,8 +59,10 @@ Open your browser and navigate to: http://127.0.0.1:5000.
 
 3. Data Visualization: The frontend fetches the sorted data and categorizes them into High, Medium, and Low priorities dynamically rendering them into a Doughnut chart.
 
-
 👨‍💻 Author
 [WUT YEE HTET]
 
 GitHub: [https://github.com/wutyeehtet/Smart-_-Task_Scheduler]
+```
+### AI Task Scheduler
+<img width="903" height="762" alt="Image" src="https://github.com/user-attachments/assets/f03dbf83-aeb5-4911-89c4-97fbf4a1802b" />
