@@ -38,7 +38,7 @@ cd Smart-Task-Scheduler
 
 2. Create a Virtual Environment
 python -m venv myenv
-source myenv/Scripts/activate  # For Windows
+myenv\Scripts\activate  # For Windows
 # source myenv/bin/activate    # For Mac/Linux
 
 3. Install Dependencies
@@ -48,7 +48,7 @@ pip install flask python-dotenv requests google-generativeai werkzeug
 GEMINI_API_KEY=your_actual_api_key_here
 
 5.  Initialize Database & Run the App
-python app.py
+py app.py
 The application will automatically generate the database.db file with the required tables.
 Open your browser and navigate to: http://127.0.0.1:5000.
 
