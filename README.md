@@ -34,7 +34,7 @@ To run this project locally on your machine, follow these steps:
 ```bash
 1. Clone the repository
 git clone [https://github.com/yourusername/Smart-_-Task_Scheduler.git](https://github.com/yourusername/Smart-Task-Scheduler.git)
-cd Smart-Task-Scheduler
+cd Smart-_-Task_Scheduler
 
 2. Create a Virtual Environment
 py -m venv myenv
