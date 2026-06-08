@@ -33,19 +33,20 @@ To run this project locally on your machine, follow these steps:
 
 ```bash
 1. Clone the repository
-git clone [https://github.com/yourusername/Smart-Task-Scheduler.git](https://github.com/yourusername/Smart-Task-Scheduler.git)
+git clone [https://github.com/yourusername/Smart-_-Task_Scheduler.git](https://github.com/yourusername/Smart-Task-Scheduler.git)
 cd Smart-Task-Scheduler
 
 2. Create a Virtual Environment
-python -m venv myenv
+py -m venv myenv
 myenv\Scripts\activate  # For Windows
-# source myenv/bin/activate    # For Mac/Linux
+source myenv/bin/activate    # For Mac/Linux
 
 3. Install Dependencies
-pip install flask python-dotenv requests google-generativeai werkzeug
+pip install flask python-dotenv requests google-genai werkzeug
 
 4.  Setup Environment Variables
-GEMINI_API_KEY=your_actual_api_key_here
+Create .env File
+Copy "GEMINI_API_KEY=your_actual_api_key_here" into .env and then replace API KEY
 
 5.  Initialize Database & Run the App
 py app.py
